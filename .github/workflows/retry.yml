@@ -4,10 +4,9 @@ name: Retry
 
 # Controls when the workflow will run
 on:
-  workflow_dispatch:
-    inputs:
-      run-id:
-        required: true
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,6 +19,6 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
+        if: ${{ context.payload.workflow_run.conclusion == 'failed' }}
         run: |
-          sleep 10
-          curl -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ inputs.run_id }}/rerun
+          curl -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ context.payload.workflow_run.id }}/rerun

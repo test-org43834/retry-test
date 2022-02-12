@@ -19,6 +19,6 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        if: ${{ context.payload.workflow_run.conclusion == 'failed' }}
+        if: ${{ github.event.workflow_run.conclusion == 'failed' }}
         run: |
           curl -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ context.payload.workflow_run.id }}/rerun

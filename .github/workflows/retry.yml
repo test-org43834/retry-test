@@ -19,6 +19,9 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+        if: ${{ github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_number < 5 }}
+        env:
+          TRIGGERING_REPOSITORY_ID: ${{ github.event.repository.id }}
+          TRIGGERING_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
-          curl -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ github.event.workflow_run.id }}/rerun
+          gh api "repositories/$TRIGGERING_REPOSITORY_ID/actions/runs/$TRIGGERING_WORKFLOW_RUN_ID/rerun-failed-jobs"

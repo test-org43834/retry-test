@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Trigger Re-run
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           TRIGGERING_REPOSITORY_ID: ${{ github.event.repository.id }}
           TRIGGERING_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |

@@ -16,4 +16,4 @@ jobs:
           TRIGGERING_REPOSITORY_ID: ${{ github.event.repository.id }}
           TRIGGERING_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
-          gh api "repositories/$TRIGGERING_REPOSITORY_ID/actions/runs/$TRIGGERING_WORKFLOW_RUN_ID/rerun-failed-jobs"
+          gh api "repositories/$TRIGGERING_REPOSITORY_ID/actions/runs/$TRIGGERING_WORKFLOW_RUN_ID/rerun"

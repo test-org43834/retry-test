@@ -27,5 +27,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         if: failure()
-        run: curl -X POST https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ github.run_id }}/rerun
+        run: |
+          curl -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/runs/${{ github.run_id }}/rerun
 

@@ -28,4 +28,4 @@ jobs:
       - name: Run a one-line script
         if: failure()
         run: |
-          curl --fail -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/workflows/retry.yml/dispatches --data '{"ref": "refs/heads/main", "inputs": {"run-id": "${{ github.run_id }}"}}'
+          curl --fail --verbose -X POST --header "Authorization: token ${{ github.token }}" https://api.github.com/repos/test-org43834/retry-test/actions/workflows/retry.yml/dispatches --data '{"ref": "refs/heads/main", "inputs": {"run-id": "${{ github.run_id }}"}}'

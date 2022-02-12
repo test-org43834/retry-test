@@ -1,25 +1,16 @@
-# This is a basic workflow to help you get started with Actions
+name: Auto-Rerun
 
-name: Retry
-
-# Controls when the workflow will run
 on:
   workflow_run:
     workflows: [CI]
     types: [completed]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  auto-rerun:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    if: ${{ github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_number < 5 }}
     steps:
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        if: ${{ github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.run_number < 5 }}
+      - name: Trigger Re-run
         env:
           TRIGGERING_REPOSITORY_ID: ${{ github.event.repository.id }}
           TRIGGERING_WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}

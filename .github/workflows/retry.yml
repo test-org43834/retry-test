@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Debug
         env:
-          EVENT: ${{ github.event.workflow_run }}
+          EVENT: ${{ toJSON(github.event) }}
         run: |
           echo "$EVENT"
 
